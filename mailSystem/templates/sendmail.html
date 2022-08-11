@@ -11,85 +11,115 @@
 </head>
 <body>
 
-<nav>
+<nav class="navbar navbar-light bg-dark">
+    <h3><i class="fa-solid fa-envelopes-bulk"></i> Sendmail </h3>
+
     <form action="/change_status" method="get">
     <button class="btn btn-outline-info">Push order Status</button>
     </form>
 
-    <button><a href="/register">Add Data</a></button>
+    <button class="btn btn-outline-info" id="nav-bt"><a href="/register">Add Data</a></button>
 
 <!--    <button><a href="{{ url_for('change_status')}}"> HAI </a></button>-->
 </nav>
+
+
+
 <div class="container">
 
-
-<h1>mail it !! </h1>
-
+    <form action="/custom_mail" method="post">
 
 
+        <div class="p-5 mb-4 bg-dark text-white rounded-3" >
+
+            <div class="row">
+                <div class="col-md-8">
+                    <h2> mailing made easier !! </h2>
+                    <p class="lead">select the customers you want to send the mail to : </p>
+
+                    <div class="form-group row">
+                        <label for="subject">Subject : </label><br>
+                        <input type="text" name="subject" id="subject" class="form-control"><br>
+                        <small>Error message</small>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="content">Body: </label><br>
+                        <textarea name="content" id="content" class="form-control" aria-label="Subject"></textarea>
+                        <small>Error message</small>
+                    </div>
+
+                </div>
+                <div class="col-md-4" >
+                    <div class="form-group row">
+                        <button type="submit" class="btn btn-outline-info btn-lg btn-block" > sale <i class="fa-solid fa-arrow-right-to-bracket"></i> </button>
+                    </div>
+                    <div class="form-group row">
+                        <button type="submit" class="btn btn-outline-info btn-lg btn-block" > festive offer <i class="fa-solid fa-arrow-right-to-bracket"></i> </button>
+                    </div>
+                    <div class="form-group row">
+                        <button type="submit" class="btn btn-outline-info btn-lg btn-block"> clear <i class="fa-solid fa-arrow-right-to-bracket"></i> </button>
+                    </div>
+                    <div class="form-group row">
+                        <button type="submit" class="btn btn-outline-info btn-lg btn-block" > Submit <i class="fa-solid fa-arrow-right-to-bracket"></i> </button>
+                    </div>
+                 </div>
+            </div>
 
 
-<p>select the customers you want to send the mail to : </p>
-<form action="/custom_mail" method="post">
-
-    <label for="subject">Subject : </label>
-    <input type="text" name="subject" id="subject">
 
 
-
-<!--    <div class="input-group">-->
-<!--      <div class="input-group-prepend">-->
-<!--        <label for="content" class="input-group-text">Body : </label>-->
-<!--      </div>-->
-<!--      <textarea  class="form-control"></textarea>-->
-<!--    </div>-->
-
-    <div class="input-group">
-        <div class="input-group-prepend">
-            <span class="input-group-text">Subject: </span>
         </div>
-        <textarea name="content" id="content" class="form-control" aria-label="Subject"></textarea>
-    </div>
 
 
 
-    <table  class="table table-borderless table-hover table-dark">
-        <thead>
+        <div class="p-5 mb-4 bg-dark text-white rounded-3" >
+            <table  class="table table-hover table-dark" id="tab-main">
+            <thead>
 
-            <tr>
-            {% for header in headings %}
-            <th>{{header}}</th>
-            {% endfor %}
-            </tr>
-
-        </thead>
-
-        <tbody>
-
-                {% for i in customers %}
                 <tr>
-                <td>{{i.fname}} {{i.lname}}</td>
-                <td>{{i.email}}</td>
-                <td>{{i.phone}}</td>
-                <td>
-                    <input type="checkbox" name="culist" value="{{i.email}}">
-                </td>
-                </tr>
+                {% for header in headings %}
+                <th id="th">{{header}}</th>
                 {% endfor %}
+                </tr>
 
-        </tbody>
+            </thead>
+
+            <tbody>
+
+                    {% for i in customers %}
+                    <tr>
+                    <td>{{i.fname}} {{i.lname}}</td>
+                    <td>{{i.email}}</td>
+                    <td>{{i.phone}}</td>
+                    <td>
+                        <input type="checkbox" name="culist" value="{{i.email}}">
+                    </td>
+                    </tr>
+                    {% endfor %}
+
+            </tbody>
+        </table>
+        </div>
 
 
 
-    </table>
-
-    <div class="container">
-        <button class="btn btn-lg btn-block"> Send mail !! </button>
-    </div>
 
 
 
-</form>
+
+        <div class="d-grid gap-2" id="mail-btn">
+            <button class="btn btn-outline-info" type="button"><i class="fa-solid fa-paper-plane"></i> Send !!</button>
+        </div>
+
+        <div class="p-5 mb-4 bg-dark text-white rounded-3" >
+            <h1>About this project : </h1>
+            <p class="lead">The purpose of this project was to create a system that automates sending mails to customers upon account creation , placing an order ,
+            upon completing shipment and delivery. All while providing you an option to send custom emails to selected customers.</p>
+            <p><a href="https://github.com/jayesh-fansamkar/mailingsys" target="_blank" class="btn btn-light btn-lg"><i class="fa-brands fa-github"></i> View on github</a></p>
+        </div>
+
+    </form>
 </div>
 </body>
 </html>

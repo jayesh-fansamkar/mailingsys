@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Signika+Negative:wght@500&display=swap');
+body{
+	background-color: #292b2c;
+
+}
+
+a { 
+	color: inherit;
+	text-decoration: inherit;
+	background-color: inherit;
+
+} 
+
+#nav-bt {
+	margin-right: 10px;
+}
+
+h3{
+	color: #5bc0de;
+	margin-left: 10px;
+	font-family: 'Lobster', cursive;
+}	
+
+h2{
+	color: #5bc0de;
+	font-family: 'Lobster', cursive;
+}
+
+body {
+	font-family: 'Signika Negative', sans-serif;
+	
+}
+
+.container {
+	margin-top: 30px;
+}
+
+#mail-btn{
+	margin-bottom: 30px;
+	margin-top: 30px;
+}
+
+#th {
+	color: #5bc0de;
+}
+
+
