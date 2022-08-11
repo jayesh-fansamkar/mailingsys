@@ -44,4 +44,11 @@ body {
 	color: #5bc0de;
 }
 
+.form-group.row small {
+	color: #e74c3c;
+	visibility: hidden;
+}
 
+.form-group.row.invalid small {
+	visibility: visible;
+}

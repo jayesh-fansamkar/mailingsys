@@ -23,7 +23,7 @@
 
 <div class="container">
 
-    <form action="/custom_mail" method="post">
+    <form action="/custom_mail" method="post" id="form">
         <div class="p-5 mb-4 bg-dark text-white rounded-3" >
 
             <div class="row">
@@ -31,7 +31,7 @@
                     <h2> mailing made easier !! </h2>
                     <p class="lead">select the customers you want to send the mail to : </p>
 
-                    <div class="form-group row">
+                    <div class="form-group row ">
                         <label for="subject">Subject : </label><br>
                         <input type="text" name="subject" id="subject" class="form-control"><br>
                         <small>Error message</small>
@@ -91,7 +91,7 @@
         </div>
 
         <div class="d-grid gap-2" id="mail-btn">
-            <button class="btn btn-outline-info" type="button"><i class="fa-solid fa-paper-plane"></i> Send !!</button>
+            <button class="btn btn-outline-info" type="submit"><i class="fa-solid fa-paper-plane"></i> Send !!</button>
         </div>
 
         <div class="p-5 mb-4 bg-dark text-white rounded-3" >
