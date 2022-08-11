@@ -6,6 +6,9 @@ const emails = document.getElementsByTagName("input").type == "checkbox";
 const form = document.getElementById('form');
 
 
+// document.getElementById("myText").value = "your string"; 
+
+
 form.addEventListener('submit', (e) => {
 	let errors = 0
 
