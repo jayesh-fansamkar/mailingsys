@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+
+<h1>Hello {{fname}} </h1>
+
+<form action="/submitOrder" method="POST">
+    <h2>Which package would you prefer ?</h2>
+
+    <label for="package1">Package 1</label>
+    <input type="radio" value="pack1" name="choice" id="package1">
+    <br><br>
+    <label for="package2">Package 2</label>
+    <input type="radio" value="pack2" name="choice" id="package2">
+    <br><br>
+
+    <input type="submit">
+
+</form>
+
+</body>
+</html>

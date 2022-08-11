@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>push order</title>
+</head>
+<body>
+    <form action="/push_status" method="post">
+<!--    <ul>-->
+<!--        {% for i in customers %}-->
+<!--        <li>{{i.fname}} {{i.lname}}  &#45;&#45; > {{i.email}}</li>-->
+<!--        {% endfor %}-->
+<!--    </ul>-->
+        <table>
+            <tr>
+                {% for header in headers %}
+                <th>{{header}}</th>
+                {% endfor %}
+            </tr>
+            {% for i in orders %}
+            <tr>
+                <td>{{i.id}}</td>
+                <td>{{i.customer_id}}</td>
+                <td>{{i.order_date}}</td>
+                <td>{{i.shipped_date}}</td>
+                <td>{{i.delivered_date}}</td>
+                <td>
+                    <input type="checkbox" name="change_stat" value="{{i.id}}">
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        <input type="submit" name="push_to_ship" value="move orders to Shipped">
+        <input type="submit" name="push_to_deliv" value="move orders to Delivered">
+</form>
+{% with messages = get_flashed_messages() %}
+         {% if messages %}
+               {% for message in messages %}
+                    <p>{{ message }}</p>
+               {% endfor %}
+         {% endif %}
+      {% endwith %}
+</body>
+</html>

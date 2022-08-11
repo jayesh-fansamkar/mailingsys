@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SendMail</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/css/sendmail.css') }}">
+<!--    <script type="text/javascript" src="{{ url_for('static', filename='/js/register.js') }}"></script>-->
+
+</head>
+<body>
+
+<nav>
+    <form action="/change_status" method="get">
+    <button class="btn btn-outline-info">Push order Status</button>
+    </form>
+
+    <button><a href="/register">Add Data</a></button>
+
+<!--    <button><a href="{{ url_for('change_status')}}"> HAI </a></button>-->
+</nav>
+<div class="container">
+
+
+<h1>mail it !! </h1>
+
+
+
+
+
+<p>select the customers you want to send the mail to : </p>
+<form action="/custom_mail" method="post">
+
+    <label for="subject">Subject : </label>
+    <input type="text" name="subject" id="subject">
+
+
+
+<!--    <div class="input-group">-->
+<!--      <div class="input-group-prepend">-->
+<!--        <label for="content" class="input-group-text">Body : </label>-->
+<!--      </div>-->
+<!--      <textarea  class="form-control"></textarea>-->
+<!--    </div>-->
+
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Subject: </span>
+        </div>
+        <textarea name="content" id="content" class="form-control" aria-label="Subject"></textarea>
+    </div>
+
+
+
+    <table  class="table table-borderless table-hover table-dark">
+        <thead>
+
+            <tr>
+            {% for header in headings %}
+            <th>{{header}}</th>
+            {% endfor %}
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+                {% for i in customers %}
+                <tr>
+                <td>{{i.fname}} {{i.lname}}</td>
+                <td>{{i.email}}</td>
+                <td>{{i.phone}}</td>
+                <td>
+                    <input type="checkbox" name="culist" value="{{i.email}}">
+                </td>
+                </tr>
+                {% endfor %}
+
+        </tbody>
+
+
+
+    </table>
+
+    <div class="container">
+        <button class="btn btn-lg btn-block"> Send mail !! </button>
+    </div>
+
+
+
+</form>
+</div>
+</body>
+</html>
