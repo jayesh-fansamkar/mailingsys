@@ -1,5 +1,3 @@
-
-
 from mailSystem import db
 from datetime import datetime
 

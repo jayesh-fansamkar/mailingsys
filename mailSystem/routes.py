@@ -1,9 +1,11 @@
-from flask import render_template, request, session, flash
+from flask import render_template, request, session, redirect, flash
 from mailSystem.models import *
-from mailSystem.sendmail import pushmail
+# from mailSystem.sendmail import pushmail
 from mailSystem import app
 
-@app.route('/')
+#Enable mailing before deployment
+
+@app.route('/', methods=['GET'])
 def mailsys():
     headings = ("Name", "Email", "Contact", "Option")
     cus = db.session.query(Customer)
@@ -17,8 +19,8 @@ def custom_mail():
         subject = request.form['subject']
         content = request.form['content']
         print(mail_list, subject, content)
-        pushmail.pushmails(mail_list, subject, content)
-        return "worked"
+        # pushmail.pushmails(mail_list, subject, content)
+        return mailsys()
 
 
 
@@ -41,21 +43,16 @@ def push_status():
             orders_li = request.form.getlist('change_stat')
             # if orders_li:
             for i in orders_li:
-
                 if db.session.query(Order.shipped_date).filter(Order.id == i).scalar() is None:
                     db.session.query(Order).filter_by(id=i).update(
                         dict(shipped_date=datetime.now().strftime("%Y-%m-%d, %H:%M")))
                     cu = db.session.query(Order.customer_id).filter(Order.id == i).scalar()
                     email_id = db.session.query(Customer.email).filter(Customer.id == cu).scalar()
-                    pushmail.shipped(email_id)
-
-                    return render_template('push_order_status.html')
+                    # pushmail.shipped(email_id)
                 else:
                     flash("Please select orders that arent already Shipped.")
-                    return render_template('push_order_status.html')
-            # else:
-            #     return "weelpppp"
-
+                    return redirect('change_status')
+            return redirect('change_status')
         elif request.form.get('push_to_deliv') == "move orders to Delivered":
             orders_li = request.form.getlist('change_stat')
             for i in orders_li:
@@ -64,11 +61,13 @@ def push_status():
                         dict(delivered_date=datetime.now().strftime("%Y-%m-%d, %H:%M")))
                     cu = db.session.query(Order.customer_id).filter(Order.id == i).scalar()
                     email_id = db.session.query(Customer.email).filter(Customer.id == cu).scalar()
-                    pushmail.delivered(email_id)
-                    return render_template('push_order_status.html')
+                    # pushmail.delivered(email_id)
                 else:
                     flash("Please select orders that are shipped and not yet delivered.")
-                    return render_template('push_order_status.html')
+                    return redirect('change_status')
+            return redirect('change_status')
+        elif request.form.get('delete') == "delete":
+            return redirect('change_status')
 
 
 
@@ -92,7 +91,7 @@ def submit():
         customer = Customer(fname, lname, dob, email, phone)
         db.session.add(customer)
         db.session.commit()
-        pushmail.welcome(email)
+        # pushmail.welcome(email)
 
         current_id = db.session.query(Customer.id).filter(Customer.email == email).scalar()
         session['value'] = current_id
@@ -114,7 +113,7 @@ def submitOrder():
         db.session.add(order)
         db.session.commit()
         email_id = db.session.query(Customer.email).filter(Customer.id == customer_id).scalar()
-        pushmail.ordered(email_id)
+        # pushmail.ordered(email_id)
         db.session.close()
         # session.clear()
         return "success"

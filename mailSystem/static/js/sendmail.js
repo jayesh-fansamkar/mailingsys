@@ -1,5 +1,4 @@
 window.onload=function(){
-
 const subject = document.getElementById('subject');
 const body = document.getElementById('content');
 const emails = document.getElementsByTagName("input").type == "checkbox";
