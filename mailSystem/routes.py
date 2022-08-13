@@ -92,6 +92,30 @@ def register():
     return render_template('register.html')
 
 
+@app.route('/remove', methods=['GET'])
+def remove():
+    headings = ("Id", "Name", "Email", "Contact", "Option")
+    cus = db.session.query(Customer)
+    return render_template('remove.html', headings=headings, customers=cus)
+
+
+@app.route('/delete_customer', methods=['POST'])
+def deletecustomer():
+    if request.method == 'POST':
+        cu_list = request.form.getlist('culist')
+        print(cu_list)
+        for i in cu_list:
+            if db.session.query(Order).filter_by(customer_id=i).scalar() is not None:
+                orderid = db.session.query(Order.id).filter_by(customer_id=i).scalar()
+                db.session.query(order_product).filter_by(order_id=orderid).delete()
+                db.session.query(Order).filter_by(id=orderid).delete()
+                db.session.query(Customer).filter_by(id=i).delete()
+            else:
+                db.session.query(Customer).filter_by(id=i).delete()
+
+        return remove()
+
+
 # submitting registration page and redirect to make order
 @app.route('/submit', methods=['POST'])
 def submit():

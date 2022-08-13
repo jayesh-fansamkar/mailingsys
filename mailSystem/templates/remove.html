@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>SendMail</title>
+    <title>Remove Customer</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
@@ -19,45 +19,13 @@
     <button class="btn btn-outline-info">Push order Status</button>
     </form>
 
-    <button class="btn btn-outline-info" >
-        <a href="/register">Add Data</a>
-    </button>
-    <button class="btn btn-outline-info" id="nav-bt">
-        <a href="/remove">Remove data</a>
-    </button>
+    <button class="btn btn-outline-info" ><a href="/">Send mail</a></button>
+    <button class="btn btn-outline-info" id="nav-bt"><a href="/register">Add data</a></button>
 </nav>
 
 <div class="container">
 
-    <form action="/custom_mail" method="post" id="form">
-        <div class="p-5 mb-4 bg-dark text-white rounded-3" >
-
-            <div class="row">
-                <div class="col-md-8">
-                    <h2> mailing made easier !! </h2>
-                    <p class="lead">draft a mail or select one of the pre-built tempelates. </p>
-
-                    <div class="form-group row ">
-                        <label for="subject">Subject : </label><br>
-                        <input type="text" name="subject" id="subject" class="form-control"><br>
-                        <small>Error message</small>
-                    </div>
-
-                    <div class="form-group row">
-                        <label for="content">Body: </label><br>
-                        <textarea name="content" id="content" class="form-control" aria-label="Subject"></textarea>
-                        <small>Error message</small>
-                    </div>
-
-                </div>
-                <div class="col-md-4" >
-                    <div class="form-group row">
-                        <button type="submit" class="btn btn-outline-info btn-lg btn-block prev"><i class="fa-solid fa-paper-plane"></i> Send !! </button>
-                    </div>
-
-                 </div>
-            </div>
-        </div>
+    <form action="/delete_customer" method="post" id="form">
 
         <div class="p-5 mb-4 bg-dark text-white rounded-3" >
             <h3>Select customers you want to send the mail to :</h3>
@@ -76,12 +44,13 @@
 
                     {% for i in customers %}
                     <tr>
-                    <td>{{i.fname}} {{i.lname}}</td>
-                    <td>{{i.email}}</td>
-                    <td>{{i.phone}}</td>
-                    <td>
-                        <input type="checkbox" name="culist" value="{{i.email}}">
-                    </td>
+                        <td>{{i.id}}</td>
+                        <td>{{i.fname}} {{i.lname}}</td>
+                        <td>{{i.email}}</td>
+                        <td>{{i.phone}}</td>
+                        <td>
+                            <input type="checkbox" name="culist" value="{{i.id}}">
+                        </td>
                     </tr>
                     {% endfor %}
 
@@ -90,7 +59,7 @@
         </div>
 
         <div class="d-grid gap-2" id="mail-btn">
-            <button class="btn btn-outline-info" type="submit"><i class="fa-solid fa-paper-plane"></i> Send !!</button>
+            <button class="btn btn-outline-danger" type="submit"><i class="fa-solid fa-trash-can"></i> Delete</button>
         </div>
 
 
@@ -104,7 +73,7 @@
             <p><a href="https://github.com/jayesh-fansamkar/mailingsys" target="_blank" class="btn btn-light btn-lg">
                 <i class="fa-brands fa-github"></i> View on github</a></p>
         </div>
-    </div>
+</div>
 
 <script type="text/javascript" src="{{ url_for('static', filename='/js/sendmail.js') }}"></script>
 </body>

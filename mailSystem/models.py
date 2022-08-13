@@ -2,7 +2,6 @@ from mailSystem import db
 from datetime import datetime
 
 
-
 class Customer(db.Model):
     __tablename__ = 'customer'
     id = db.Column(db.Integer, primary_key=True)
