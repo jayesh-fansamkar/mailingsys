@@ -66,7 +66,25 @@ def push_status():
                     flash("Please select orders that are shipped and not yet delivered.")
                     return redirect('change_status')
             return redirect('change_status')
-        elif request.form.get('delete') == "delete":
+        elif request.form.get('delete') == "delete order status":
+            orders_li = request.form.getlist('change_stat')
+            for i in orders_li:
+                if db.session.query(Order.delivered_date).filter(Order.id == i).scalar() is not None:
+                    db.session.query(Order).filter_by(id=i).update(dict(delivered_date=None))
+
+                elif db.session.query(Order.shipped_date).filter(Order.id == i).scalar() is not None:
+                    db.session.query(Order).filter_by(id=i).update(dict(shipped_date=None))
+
+                else:
+                    flash("Please select valid orders.")
+                    return redirect('change_status')
+            return redirect('change_status')
+
+        elif request.form.get('delete_order') == "delete order":
+            orders_li = request.form.getlist('change_stat')
+            for i in orders_li:
+                db.session.query(order_product).filter_by(order_id=i).delete()
+                Order.query.filter_by(id=i).delete()
             return redirect('change_status')
 
 
@@ -115,8 +133,8 @@ def submitOrder():
         email_id = db.session.query(Customer.email).filter(Customer.id == customer_id).scalar()
         # pushmail.ordered(email_id)
         db.session.close()
-        # session.clear()
-        return "success"
+        session.clear()
+        return render_template('completed.html')
 
 
 @app.route('/test', methods=['GET'])
