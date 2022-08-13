@@ -24,27 +24,27 @@ class PushMail(object):
         f.close()
 
     def welcome(self, recipient):
-        loc = r'C:\Users\Tejas\PycharmProjects\mailingsys\mailSystem\static\mails\welcome.txt'
+        loc = r'mailSystem/static/mails/welcome.txt'
         subject = "Welcome"
         self.main(recipient, subject, loc)
 
     def ordered(self, recipient):
-        loc = r'C:\Users\Tejas\PycharmProjects\mailingsys\mailSystem\static\mails\delivered.txt'
+        loc = r'mailSystem/static/mails/ordered.txt'
         subject = "Order Confirmed"
         self.main(recipient, subject, loc)
 
     def shipped(self, recipient):
-        loc = r'C:\Users\Tejas\PycharmProjects\mailingsys\mailSystem\static\mails\shipped.txt'
+        loc = r'mailSystem/static/mails/shipped.txt'
         subject = "Order Shipped"
         self.main(recipient, subject, loc)
 
     def delivered(self, recipient):
-        loc = r'C:\Users\Tejas\PycharmProjects\mailingsys\mailSystem\static\mails\delivered.txt'
+        loc = r'mailSystem/static/mails/delivered.txt'
         subject = "Order Delivered"
         self.main(recipient, subject, loc)
 
     def pushmails(self, mail_list, subject, content):
-        loc = r'C:\Users\Tejas\PycharmProjects\mailingsys\mailSystem\static\mails\custom.txt'
+        loc = r'mailSystem/static/mails/custom.txt'
         with open(loc, 'w') as f:
             f.write(content)
         for i in mail_list:
