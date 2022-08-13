@@ -74,12 +74,13 @@
 
                     {% for i in customers %}
                     <tr>
-                    <td>{{i.fname}} {{i.lname}}</td>
-                    <td>{{i.email}}</td>
-                    <td>{{i.phone}}</td>
-                    <td>
-                        <input type="checkbox" name="culist" value="{{i.email}}">
-                    </td>
+                        <td>{{i.id}}</td>
+                        <td>{{i.fname}} {{i.lname}}</td>
+                        <td>{{i.email}}</td>
+                        <td>{{i.phone}}</td>
+                        <td>
+                            <input type="checkbox" name="culist" value="{{i.email}}">
+                        </td>
                     </tr>
                     {% endfor %}
 

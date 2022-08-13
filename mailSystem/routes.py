@@ -6,7 +6,7 @@ from mailSystem import app
 
 @app.route('/', methods=['GET'])
 def mailsys():
-    headings = ("Name", "Email", "Contact", "Option")
+    headings = ("Id", "Name", "Email", "Contact", "Option")
     cus = db.session.query(Customer)
     return render_template('sendmail.html', headings=headings, customers=cus)
 
