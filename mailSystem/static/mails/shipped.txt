@@ -1,1 +1,3 @@
-shipped
+dear customer, 
+
+	Your fashiongrade package has been shipped and will be delivered shortly. 

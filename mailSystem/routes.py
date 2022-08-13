@@ -1,9 +1,8 @@
 from flask import render_template, request, session, redirect, flash
 from mailSystem.models import *
-# from mailSystem.sendmail import pushmail
+from mailSystem.sendmail import pushmail
 from mailSystem import app
 
-#Enable mailing before deployment
 
 @app.route('/', methods=['GET'])
 def mailsys():
@@ -19,9 +18,8 @@ def custom_mail():
         subject = request.form['subject']
         content = request.form['content']
         print(mail_list, subject, content)
-        # pushmail.pushmails(mail_list, subject, content)
+        pushmail.pushmails(mail_list, subject, content)
         return mailsys()
-
 
 
 @app.route('/change_status', methods=['GET'])
@@ -32,7 +30,6 @@ def change_status():
         header = ('order id', 'customer id', 'ordered date', 'shipped date', 'delivered date')
         order = db.session.query(Order)
         return render_template('push_order_status.html', headers=header, orders=order)
-
 
 
 # change name and make so that you have to pass at least 1 value
@@ -48,7 +45,7 @@ def push_status():
                         dict(shipped_date=datetime.now().strftime("%Y-%m-%d, %H:%M")))
                     cu = db.session.query(Order.customer_id).filter(Order.id == i).scalar()
                     email_id = db.session.query(Customer.email).filter(Customer.id == cu).scalar()
-                    # pushmail.shipped(email_id)
+                    pushmail.shipped(email_id)
                 else:
                     flash("Please select orders that arent already Shipped.")
                     return redirect('change_status')
@@ -56,12 +53,13 @@ def push_status():
         elif request.form.get('push_to_deliv') == "move orders to Delivered":
             orders_li = request.form.getlist('change_stat')
             for i in orders_li:
-                if db.session.query(Order.shipped_date).filter(Order.id == i).scalar() is not None and db.session.query(Order.delivered_date).filter(Order.id == i).scalar() is None:
+                if db.session.query(Order.shipped_date).filter(Order.id == i).scalar() is not None and db.session.query(
+                        Order.delivered_date).filter(Order.id == i).scalar() is None:
                     db.session.query(Order).filter_by(id=i).update(
                         dict(delivered_date=datetime.now().strftime("%Y-%m-%d, %H:%M")))
                     cu = db.session.query(Order.customer_id).filter(Order.id == i).scalar()
                     email_id = db.session.query(Customer.email).filter(Customer.id == cu).scalar()
-                    # pushmail.delivered(email_id)
+                    pushmail.delivered(email_id)
                 else:
                     flash("Please select orders that are shipped and not yet delivered.")
                     return redirect('change_status')
@@ -88,7 +86,6 @@ def push_status():
             return redirect('change_status')
 
 
-
 # Registeration page
 @app.route('/register', methods=['GET'])
 def register():
@@ -106,15 +103,24 @@ def submit():
         email = request.form['email']
         phone = request.form['phone']
 
-        customer = Customer(fname, lname, dob, email, phone)
-        db.session.add(customer)
-        db.session.commit()
-        # pushmail.welcome(email)
+        if db.session.query(Customer.email).filter_by(email=email).scalar() is None:
+            customer = Customer(fname, lname, dob, email, phone)
+            db.session.add(customer)
+            db.session.commit()
+            pushmail.welcome(email)
 
-        current_id = db.session.query(Customer.id).filter(Customer.email == email).scalar()
-        session['value'] = current_id
+            current_id = db.session.query(Customer.id).filter(Customer.email == email).scalar()
+            session['value'] = current_id
 
-        return render_template('makeOrder.html', fname=fname, id=current_id)
+            return render_template('makeOrder.html', fname=fname, id=current_id)
+        else:
+            return render_template('inuse.html')
+
+
+@app.route('/add', methods=['GET'])
+def add_data():
+    if request.method == 'GET':
+        return render_template('register.html')
 
 
 @app.route('/submitOrder', methods=['POST'])
@@ -131,7 +137,7 @@ def submitOrder():
         db.session.add(order)
         db.session.commit()
         email_id = db.session.query(Customer.email).filter(Customer.id == customer_id).scalar()
-        # pushmail.ordered(email_id)
+        pushmail.ordered(email_id)
         db.session.close()
         session.clear()
         return render_template('completed.html')

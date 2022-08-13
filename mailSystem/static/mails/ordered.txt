@@ -1,1 +1,3 @@
-ordered
+dear customer, 
+
+	your fashiongrade order has been recieved and confirmed. please check your mails for further details. 
