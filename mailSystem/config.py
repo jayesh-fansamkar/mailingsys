@@ -1,7 +1,4 @@
 import os
-import dotenv
-
-dotenv.load_dotenv('.env')
 
 uri = os.getenv("DATABASE_URL")
 if uri and uri.startswith("postgres://"):
