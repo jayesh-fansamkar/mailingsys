@@ -1,14 +1,17 @@
+import os
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
+email_mail = os.getenv("MAIL_EMAIL")
+mail_pw = os.getenv("MAIL_PW")
 
 # 15potatoes@sendmail
 class PushMail(object):
 
     def main(self, recipient, subject, loc):
         message = MIMEMultipart()
-        message['From'] = 'devtest@outlook.in'
+        message['From'] = email_mail
         message['To'] = recipient
         message['Subject'] = subject
         f = open(loc, 'r')
@@ -16,9 +19,9 @@ class PushMail(object):
         message.attach(MIMEText(body, 'plain'))
         with smtplib.SMTP("smtp-mail.outlook.com", 587) as server:
             server.starttls()
-            server.login('devtest@outlook.in', '15potatoes')
+            server.login(email_mail, mail_pw)
             text = message.as_string()
-            server.sendmail('devtest@outlook.in', recipient, text)
+            server.sendmail(email_mail, recipient, text)
             # server.quit()
         f.close()
 

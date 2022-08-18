@@ -1,1 +1,1 @@
-dot env successfully working 
+importing outlook password from .env in sendmail module. 
