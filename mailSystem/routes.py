@@ -49,6 +49,7 @@ def push_status():
                 else:
                     flash("Please select orders that arent already Shipped.")
                     return redirect('change_status')
+            db.session.commit()
             return redirect('change_status')
         elif request.form.get('push_to_deliv') == "move orders to Delivered":
             orders_li = request.form.getlist('change_stat')
@@ -63,6 +64,7 @@ def push_status():
                 else:
                     flash("Please select orders that are shipped and not yet delivered.")
                     return redirect('change_status')
+            db.session.commit()
             return redirect('change_status')
         elif request.form.get('delete') == "delete order status":
             orders_li = request.form.getlist('change_stat')
@@ -76,6 +78,7 @@ def push_status():
                 else:
                     flash("Please select valid orders.")
                     return redirect('change_status')
+            db.session.commit()
             return redirect('change_status')
 
         elif request.form.get('delete_order') == "delete order":
@@ -83,6 +86,7 @@ def push_status():
             for i in orders_li:
                 db.session.query(order_product).filter_by(order_id=i).delete()
                 Order.query.filter_by(id=i).delete()
+            db.session.commit()
             return redirect('change_status')
 
 
@@ -112,7 +116,7 @@ def deletecustomer():
                 db.session.query(Customer).filter_by(id=i).delete()
             else:
                 db.session.query(Customer).filter_by(id=i).delete()
-
+        db.session.commit()
         return remove()
 
 
@@ -162,7 +166,6 @@ def submitOrder():
         db.session.commit()
         email_id = db.session.query(Customer.email).filter(Customer.id == customer_id).scalar()
         pushmail.ordered(email_id)
-        db.session.close()
         session.clear()
         return render_template('completed.html')
 

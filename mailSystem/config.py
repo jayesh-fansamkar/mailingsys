@@ -1,13 +1,17 @@
 import os
+import dotenv
+
+dotenv.load_dotenv('.env')
 
 uri = os.getenv("DATABASE_URL")
 if uri and uri.startswith("postgres://"):
-    val = uri.replace("postgres://", "postgresql://", 1)
+    uri = uri.replace("postgres://", "postgresql://", 1)
+
 
 class Config:
     # SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:hr@localhost/mailingsys'
-    SQLALCHEMY_DATABASE_URI = val
-    # DEBUG = True
-    DEBUG = False
+    SQLALCHEMY_DATABASE_URI = uri
+    DEBUG = True
+    # DEBUG = False
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SESSION_TYPE = 'sqlalchemy'

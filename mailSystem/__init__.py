@@ -12,7 +12,7 @@ app.config.from_object(Config)
 db = SQLAlchemy(app)
 app.config['SESSION_SQLALCHEMY'] = db
 
-# session = Session(app)
-Session(app)
+session = Session(app)
+# Session(app)
 
 from mailSystem import routes
