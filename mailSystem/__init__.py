@@ -12,8 +12,8 @@ app.config['SESSION_SQLALCHEMY'] = db
 
 session = Session(app)
 
-from mailSystem.route.mainsys import comms
-from mailSystem.route.fashiongrade import shop
+from mailSystem.routes.mainsys import comms
+from mailSystem.routes.fashiongrade import shop
 
 app.register_blueprint(shop)
 app.register_blueprint(comms)
