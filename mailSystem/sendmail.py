@@ -6,7 +6,7 @@ from email.mime.multipart import MIMEMultipart
 email_mail = os.getenv("MAIL_EMAIL")
 mail_pw = os.getenv("MAIL_PW")
 
-# 15potatoes@sendmail
+
 class PushMail(object):
 
     def main(self, recipient, subject, loc):
