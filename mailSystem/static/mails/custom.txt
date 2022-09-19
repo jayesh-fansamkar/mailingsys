@@ -1,1 +1,1 @@
-testing custom mail after blueprints
+test
